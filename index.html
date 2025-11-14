@@ -5,16 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TV Familiar Cristiana - App Android sin publicidad</title>
 
-  <!-- Descripción SEO -->
   <meta name="description" content="TV Familiar Cristiana: aplicación Android gratuita, sin publicidad, sin ánimo de lucro. Disfruta contenido cristiano, prédicas, películas y música con valores para toda la familia.">
-
-  <!-- Palabras clave SEO -->
   <meta name="keywords" content="tv, televisión, android, apk, cristiano, cristiana, familiar, predicas, películas, valores, fe, Jesús, sin publicidad, gratis">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="tv.png">
 
-  <!-- Estilos -->
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -54,15 +49,12 @@
       width: 280px;
       height: auto;
       border: none;
-      box-shadow: none;
-      background: none;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
 
     .tv-image:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
     }
 
     .watch-online {
@@ -70,7 +62,6 @@
       font-size: 1.2em;
       color: #2b4c7e;
       font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .description {
@@ -166,98 +157,76 @@
 
   <!-- Sección de descarga -->
   <div class="download-section">
-    <a
-      href="Tv.smarttv.apk"
-      class="download-button"
-      target="_blank"
-      onclick="sumarDescarga()"
-    >
+    <a href="Tv.smarttv.apk" class="download-button" target="_blank" onclick="sumarDescarga()">
       📥 Descargar aplicación Android
     </a>
 
     <br>
 
-    <img
-      src="tv.png"
-      alt="Descargar APK"
-      class="small-icon"
-      onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')"
-    >
+    <img src="tv.png" alt="Descargar APK" class="small-icon"
+         onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')">
   </div>
 
-  <!-- Descripción -->
   <p class="description">
     Bienvenido a <strong>TV Familiar Cristiana</strong>, una aplicación creada con amor y propósito para compartir 
     <span class="highlight">contenido cristiano, prédicas, películas, alabanzas y mensajes de esperanza</span>.
-    Ideal para toda la familia, con programación limpia, edificante y sin distracciones.
   </p>
 
   <p class="watch-online">🎬 Mira la TV desde el navegador</p>
 
-  <a href="https://tvenvivo.netlify.app/" target="_blank" title="Ver TV en vivo">
+  <a href="https://tvenvivo.netlify.app/" target="_blank">
     <img src="tv.png" alt="Televisor clásico cristiano" class="tv-image">
   </a>
 
   <footer>
-    © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.  
+    © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.
   </footer>
 
-  
-<!-- ▶️ Contador visible -->
+<!-- 🟦 CONTADOR GLOBAL USANDO JSONBIN.IO -->
 <div class="contador" id="contador">Cargando...</div>
 
-<!-- ▶️ Contador usando JSONBin.io -->
 <script>
   const BIN_ID = "691677bf43b1c97be9ac1373";
-  const API_KEY = "$2a$10$i1Q45IdGj2Sxd4zGw6mED.QTt8oIovMYDIKVLJnMB3UbTT5p/t1AS";  // ← PON AQUÍ TU X-Master-Key
+  const API_KEY = "AQUÍ_TU_API_KEY";  // ← PON AQUÍ TU API KEY
   const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-  // Cargar valor actual
   async function cargarContador() {
     try {
       const res = await fetch(API_URL, {
         headers: { "X-Master-Key": API_KEY }
       });
       const data = await res.json();
-      document.getElementById("contador").innerText =
-        data.record.descargas;
+      document.getElementById("contador").innerText = data.record.descargas;
     } catch (e) {
       document.getElementById("contador").innerText = "Err";
-      console.error(e);
     }
   }
 
-  // Sumar +1 por descarga
   async function sumarDescarga() {
     try {
       const res = await fetch(API_URL, {
         headers: { "X-Master-Key": API_KEY }
       });
       const data = await res.json();
+      const nuevo = data.record.descargas + 1;
 
-      const nuevoTotal = data.record.descargas + 1;
-
-      // Guardar valor actualizado
       await fetch(API_URL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "X-Master-Key": API_KEY
         },
-        body: JSON.stringify({ descargas: nuevoTotal })
+        body: JSON.stringify({ descargas: nuevo })
       });
 
-      // Actualizar visualmente
-      document.getElementById("contador").innerText = nuevoTotal;
+      document.getElementById("contador").innerText = nuevo;
     } catch (e) {
-      console.error("Error sumando descarga", e);
+      console.error(e);
     }
   }
 
   cargarContador();
 </script>
-
-
 
 </body>
 </html>
