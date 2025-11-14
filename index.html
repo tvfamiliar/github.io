@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TV Familiar Cristiana - App Android sin publicidad</title>
 
+  <!-- SEO -->
   <meta name="description" content="TV Familiar Cristiana: aplicación Android gratuita, sin publicidad, sin ánimo de lucro. Disfruta contenido cristiano, prédicas, películas y música con valores para toda la familia.">
   <meta name="keywords" content="tv, televisión, android, apk, cristiano, cristiana, familiar, predicas, películas, valores, fe, Jesús, sin publicidad, gratis">
 
+  <!-- Ícono -->
   <link rel="icon" type="image/png" href="tv.png">
 
   <style>
@@ -47,10 +49,8 @@
 
     .tv-image {
       width: 280px;
-      height: auto;
-      border: none;
-      cursor: pointer;
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
     .tv-image:hover {
@@ -60,8 +60,8 @@
     .watch-online {
       margin-top: 40px;
       font-size: 1.2em;
-      color: #2b4c7e;
       font-weight: 600;
+      color: #2b4c7e;
     }
 
     .description {
@@ -69,7 +69,6 @@
       margin: 0 20px 20px;
       line-height: 1.6;
       font-size: 1.05em;
-      color: #444;
     }
 
     .note {
@@ -78,7 +77,6 @@
       padding: 15px;
       margin: 30px 20px;
       border-radius: 10px;
-      color: #2b4c7e;
       font-weight: 500;
     }
 
@@ -129,7 +127,7 @@
       text-decoration: none;
     }
 
-    /* Contador global */
+    /* 🔵 Contador global */
     .contador {
       position: fixed;
       bottom: 12px;
@@ -140,63 +138,74 @@
       border-radius: 10px;
       font-size: 17px;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       z-index: 9999;
+    }
+
+    .contador .label {
+      font-size: 12px;
+      opacity: 0.75;
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>📺 TV Familiar Cristiana</h1>
-    <h2>Una ventana de fe, esperanza y valores</h2>
-  </header>
 
-  <div class="note">
-    🌿 <strong>Sin publicidad, sin ánimo de lucro y totalmente gratuita.</strong><br>
-    Porque creemos que el mensaje de Cristo debe compartirse sin barreras.
-  </div>
+<header>
+  <h1>📺 TV Familiar Cristiana</h1>
+  <h2>Una ventana de fe, esperanza y valores</h2>
+</header>
 
-  <!-- Sección de descarga -->
-  <div class="download-section">
-    <a href="Tv.smarttv.apk" class="download-button" target="_blank" onclick="sumarDescarga()">
-      📥 Descargar aplicación Android
-    </a>
+<div class="note">
+  🌿 <strong>Sin publicidad, sin ánimo de lucro y totalmente gratuita.</strong><br>
+  Porque creemos que el mensaje de Cristo debe compartirse sin barreras.
+</div>
 
-    <br>
-
-    <img src="tv.png" alt="Descargar APK" class="small-icon"
-         onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')">
-  </div>
-
-  <p class="description">
-    Bienvenido a <strong>TV Familiar Cristiana</strong>, una aplicación creada con amor y propósito para compartir 
-    <span class="highlight">contenido cristiano, prédicas, películas, alabanzas y mensajes de esperanza</span>.
-  </p>
-
-  <p class="watch-online">🎬 Mira la TV desde el navegador</p>
-
-  <a href="https://tvenvivo.netlify.app/" target="_blank">
-    <img src="tv.png" alt="Televisor clásico cristiano" class="tv-image">
+<!-- Sección de descarga -->
+<div class="download-section">
+  <a href="Tv.smarttv.apk" class="download-button" target="_blank" onclick="sumarDescarga()">
+    📥 Descargar aplicación Android
   </a>
 
-  <footer>
-    © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.
-  </footer>
+  <br>
 
-<!-- 🟦 CONTADOR GLOBAL USANDO JSONBIN.IO -->
-<div class="contador" id="contador">Cargando...</div>
+  <img src="tv.png" alt="Descargar APK" class="small-icon"
+       onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')">
+</div>
 
+<p class="description">
+  Bienvenido a <strong>TV Familiar Cristiana</strong>, una aplicación creada con amor y propósito para compartir 
+  <span class="highlight">contenido cristiano, prédicas, películas, alabanzas y mensajes de esperanza</span>.
+  Ideal para toda la familia.
+</p>
+
+<p class="watch-online">🎬 Mira la TV desde el navegador</p>
+
+<a href="https://tvenvivo.netlify.app/" target="_blank">
+  <img src="tv.png" class="tv-image" alt="Ver TV en vivo">
+</a>
+
+<footer>
+  © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.
+</footer>
+
+<!-- 🔵 CONTADOR GLOBAL -->
+<div class="contador">
+  <span class="label">Descargas:</span>
+  <span id="contador">Cargando...</span>
+</div>
+
+<!-- 🔵 SCRIPT DEL CONTADOR (NPOINT) -->
 <script>
-  const BIN_ID = "691677bf43b1c97be9ac1373";
-  const API_KEY = "AQUÍ_TU_API_KEY";  // ← PON AQUÍ TU API KEY
-  const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+  const API_URL = "https://api.npoint.io/691677bf43b1c97be9ac1373";
 
   async function cargarContador() {
     try {
-      const res = await fetch(API_URL, {
-        headers: { "X-Master-Key": API_KEY }
-      });
+      const res = await fetch(API_URL);
       const data = await res.json();
-      document.getElementById("contador").innerText = data.record.descargas;
+      document.getElementById("contador").innerText = data.descargas;
     } catch (e) {
       document.getElementById("contador").innerText = "Err";
     }
@@ -204,24 +213,20 @@
 
   async function sumarDescarga() {
     try {
-      const res = await fetch(API_URL, {
-        headers: { "X-Master-Key": API_KEY }
-      });
+      const res = await fetch(API_URL);
       const data = await res.json();
-      const nuevo = data.record.descargas + 1;
+      const nuevoTotal = data.descargas + 1;
 
       await fetch(API_URL, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": API_KEY
-        },
-        body: JSON.stringify({ descargas: nuevo })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ descargas: nuevoTotal })
       });
 
-      document.getElementById("contador").innerText = nuevo;
+      document.getElementById("contador").innerText = nuevoTotal;
+
     } catch (e) {
-      console.error(e);
+      console.error("Error guardando contador", e);
     }
   }
 
