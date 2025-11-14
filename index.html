@@ -206,17 +206,34 @@
   <div class="contador" id="contador">0</div>
 
   <!-- ▶️ Script del contador -->
-  <script>
-    // Obtener valor guardado o iniciar en 0
-    let total = localStorage.getItem("descargasTV") || 0;
-    document.getElementById("contador").innerText = total;
 
-    function sumarDescarga() {
-      total++;
-      localStorage.setItem("descargasTV", total);
-      document.getElementById("contador").innerText = total;
+  <script>
+  const NAMESPACE = "tvfamiliar_app";
+  const KEY = "descargas";
+
+  async function cargarContador() {
+    try {
+      const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`);
+      const data = await res.json();
+      document.getElementById("contador").innerText = data.value;
+    } catch (e) {
+      console.error("Error al cargar contador", e);
     }
-  </script>
+  }
+
+  async function sumarDescarga() {
+    try {
+      const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`);
+      const data = await res.json();
+      document.getElementById("contador").innerText = data.value;
+    } catch (e) {
+      console.error("Error al sumar descarga", e);
+    }
+  }
+
+  cargarContador();
+</script>
+
 
 </body>
 </html>
