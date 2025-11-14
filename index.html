@@ -9,6 +9,7 @@
   <meta name="description" content="TV Familiar Cristiana: aplicación Android gratuita, sin publicidad, sin ánimo de lucro. Disfruta contenido cristiano, prédicas, películas y música con valores para toda la familia.">
   <meta name="keywords" content="tv, televisión, android, apk, cristiano, cristiana, familiar, predicas, películas, valores, fe, Jesús, sin publicidad, gratis">
 
+  <!-- Ícono -->
   <link rel="icon" type="image/png" href="tv.png">
 
   <style>
@@ -25,8 +26,52 @@
       text-align: center;
     }
 
-    h1 { font-size: 2.3em; color: #2b4c7e; margin-bottom: 10px; }
-    h2 { font-weight: normal; color: #3a5a8a; font-size: 1.1em; }
+    header {
+      margin-top: 40px;
+    }
+
+    h1 {
+      font-size: 2.3em;
+      color: #2b4c7e;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-weight: normal;
+      color: #3a5a8a;
+      font-size: 1.1em;
+    }
+
+    .highlight {
+      color: #2b4c7e;
+      font-weight: bold;
+    }
+
+    /* 🔽 AQUÍ SE ARREGLA EL TAMAÑO DE LA IMAGEN DE ABAJO */
+    .tv-image {
+      width: 150px;
+      max-width: 150px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .tv-image:hover {
+      transform: scale(1.05);
+    }
+
+    .watch-online {
+      margin-top: 40px;
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #2b4c7e;
+    }
+
+    .description {
+      max-width: 700px;
+      margin: 0 20px 20px;
+      line-height: 1.6;
+      font-size: 1.05em;
+    }
 
     .note {
       background-color: #eaf0f8;
@@ -37,36 +82,54 @@
       font-weight: 500;
     }
 
+    .download-section {
+      margin-top: 30px;
+    }
+
     .download-button {
       display: inline-block;
       background-color: #2b4c7e;
       color: white;
+      text-decoration: none;
       padding: 15px 25px;
       border-radius: 12px;
-      text-decoration: none;
       font-size: 1.1em;
       font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .download-button:hover {
+      background-color: #3a69b3;
+      transform: scale(1.05);
     }
 
     .small-icon {
-      margin-top: 20px;
+      display: block;
+      margin: 20px auto;
       width: 90px;
       cursor: pointer;
+      transition: transform 0.2s ease;
     }
 
-.tv-image {
-  width: 150px;     /* tamaño moderado */
-  max-width: 150px; /* nunca crecerá más de 150px */
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
+    .small-icon:hover {
+      transform: scale(1.1);
+    }
 
-.tv-image:hover {
-  transform: scale(1.05);
-}
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #555;
+      background-color: #f0f4f8;
+      width: 100%;
+    }
 
+    footer a {
+      color: #2b4c7e;
+      text-decoration: none;
+    }
 
-    /* 🔵 CONTADOR GLOBAL */
+    /* 🔵 Contador global */
     .contador {
       position: fixed;
       bottom: 12px;
@@ -98,36 +161,45 @@
 </header>
 
 <div class="note">
-  🌿 <strong>Sin publicidad, sin ánimo de lucro y totalmente gratuita.</strong>
+  🌿 <strong>Sin publicidad, sin ánimo de lucro y totalmente gratuita.</strong><br>
+  Porque creemos que el mensaje de Cristo debe compartirse sin barreras.
 </div>
 
+<!-- Sección de descarga -->
 <div class="download-section">
   <a href="Tv.smarttv.apk" class="download-button" target="_blank" onclick="sumarDescarga()">
     📥 Descargar aplicación Android
   </a>
+
   <br>
-  <img src="tv.png" class="small-icon" onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')">
+
+  <img src="tv.png" alt="Descargar APK" class="small-icon"
+       onclick="sumarDescarga(); window.open('Tv.smarttv.apk', '_blank')">
 </div>
 
 <p class="description">
-  Bienvenido a <strong>TV Familiar Cristiana</strong>, una aplicación creada con amor para compartir 
-  contenido cristiano, prédicas, películas, alabanzas y mensajes de esperanza.
+  Bienvenido a <strong>TV Familiar Cristiana</strong>, una aplicación creada con amor y propósito para compartir 
+  <span class="highlight">contenido cristiano, prédicas, películas, alabanzas y mensajes de esperanza</span>.
+  Ideal para toda la familia.
 </p>
+
+<p class="watch-online">🎬 Mira la TV desde el navegador</p>
 
 <a href="https://tvenvivo.netlify.app/" target="_blank">
   <img src="tv.png" class="tv-image" alt="Ver TV en vivo">
 </a>
 
 <footer>
-  © 2025 TV Familiar Cristiana
+  © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.
 </footer>
 
-<!-- 🔵 CONTADOR ÚNICO (CORRECTO) -->
+<!-- 🔵 CONTADOR GLOBAL -->
 <div class="contador">
   <span class="label">Descargas:</span>
   <span id="contador">Cargando...</span>
 </div>
 
+<!-- 🟦 CONTADOR GLOBAL JSONBIN -->
 <script>
   const BIN_ID = "691677bf43b1c97be9ac1373";
   const API_KEY = "$2a$10$i1Q45IdGj2Sxd4zGw6mED.QTt8oIovMYDIKVLJnMB3UbTT5p/t1AS";
@@ -163,7 +235,6 @@
       });
 
       document.getElementById("contador").innerText = nuevo;
-
     } catch (e) {
       console.error(e);
     }
