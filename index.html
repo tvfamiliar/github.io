@@ -197,15 +197,21 @@
   <span id="contador">Cargando...</span>
 </div>
 
-<!-- 🔵 SCRIPT DEL CONTADOR (NPOINT) -->
+<!-- 🟦 CONTADOR GLOBAL USANDO JSONBIN.IO -->
+<div class="contador" id="contador">Cargando...</div>
+
 <script>
-  const API_URL = "https://api.npoint.io/691677bf43b1c97be9ac1373";
+  const BIN_ID = "691677bf43b1c97be9ac1373";
+  const API_KEY = "AQUÍ_TU_API_KEY";  // ← PON AQUÍ TU API KEY
+  const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
   async function cargarContador() {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL, {
+        headers: { "X-Master-Key": API_KEY }
+      });
       const data = await res.json();
-      document.getElementById("contador").innerText = data.descargas;
+      document.getElementById("contador").innerText = data.record.descargas;
     } catch (e) {
       document.getElementById("contador").innerText = "Err";
     }
@@ -213,25 +219,30 @@
 
   async function sumarDescarga() {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL, {
+        headers: { "X-Master-Key": API_KEY }
+      });
       const data = await res.json();
-      const nuevoTotal = data.descargas + 1;
+      const nuevo = data.record.descargas + 1;
 
       await fetch(API_URL, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descargas: nuevoTotal })
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY
+        },
+        body: JSON.stringify({ descargas: nuevo })
       });
 
-      document.getElementById("contador").innerText = nuevoTotal;
-
+      document.getElementById("contador").innerText = nuevo;
     } catch (e) {
-      console.error("Error guardando contador", e);
+      console.error(e);
     }
   }
 
   cargarContador();
 </script>
+
 
 </body>
 </html>
