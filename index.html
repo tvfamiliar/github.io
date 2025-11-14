@@ -202,36 +202,45 @@
     © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.  
   </footer>
 
-  <!-- Contador global -->
-  <div class="contador" id="contador">0</div>
+  <!-- ▶️ Contador visible -->
+<div class="contador" id="contador">Cargando...</div>
 
-  <!-- Script del contador GLOBAL -->
-  <script>
-    const NAMESPACE = "tvfamiliar_app";
-    const KEY = "descargas";
+<!-- ▶️ Script del contador global -->
+<script>
+  const API_URL = "https://api.npoint.io/51d216f2e927a7f3a9a2"; // Contador global
 
-    async function cargarContador() {
-      try {
-        const res = await fetch(`https://api.countapi.xyz/get/${NAMESPACE}/${KEY}`);
-        const data = await res.json();
-        document.getElementById("contador").innerText = data.value;
-      } catch (e) {
-        console.error("Error al cargar contador", e);
-      }
+  async function cargarContador() {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      document.getElementById("contador").innerText = data.descargas;
+    } catch (e) {
+      document.getElementById("contador").innerText = "Err";
     }
+  }
 
-    async function sumarDescarga() {
-      try {
-        const res = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`);
-        const data = await res.json();
-        document.getElementById("contador").innerText = data.value;
-      } catch (e) {
-        console.error("Error al sumar descarga", e);
-      }
+  async function sumarDescarga() {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      const nuevoTotal = data.descargas + 1;
+
+      // Guardar el nuevo valor en NPOINT
+      await fetch(API_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ descargas: nuevoTotal })
+      });
+
+      document.getElementById("contador").innerText = nuevoTotal;
+    } catch (e) {
+      console.error("Error guardando contador", e);
     }
+  }
 
-    cargarContador();
-  </script>
+  cargarContador();
+</script>
+
 
 </body>
 </html>
