@@ -202,44 +202,61 @@
     © 2025 TV Familiar Cristiana — Inspirando hogares con fe, amor y esperanza.  
   </footer>
 
-  <!-- ▶️ Contador visible -->
+  
+<!-- ▶️ Contador visible -->
 <div class="contador" id="contador">Cargando...</div>
 
-<!-- ▶️ Script del contador global -->
+<!-- ▶️ Contador usando JSONBin.io -->
 <script>
-  const API_URL = "https://api.npoint.io/51d216f2e927a7f3a9a2"; // Contador global
+  const BIN_ID = "691677bf43b1c97be9ac1373";
+  const API_KEY = "$2a$10$i1Q45IdGj2Sxd4zGw6mED.QTt8oIovMYDIKVLJnMB3UbTT5p/t1AS";  // ← PON AQUÍ TU X-Master-Key
+  const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
+  // Cargar valor actual
   async function cargarContador() {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL, {
+        headers: { "X-Master-Key": API_KEY }
+      });
       const data = await res.json();
-      document.getElementById("contador").innerText = data.descargas;
+      document.getElementById("contador").innerText =
+        data.record.descargas;
     } catch (e) {
       document.getElementById("contador").innerText = "Err";
+      console.error(e);
     }
   }
 
+  // Sumar +1 por descarga
   async function sumarDescarga() {
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(API_URL, {
+        headers: { "X-Master-Key": API_KEY }
+      });
       const data = await res.json();
-      const nuevoTotal = data.descargas + 1;
 
-      // Guardar el nuevo valor en NPOINT
+      const nuevoTotal = data.record.descargas + 1;
+
+      // Guardar valor actualizado
       await fetch(API_URL, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY
+        },
         body: JSON.stringify({ descargas: nuevoTotal })
       });
 
+      // Actualizar visualmente
       document.getElementById("contador").innerText = nuevoTotal;
     } catch (e) {
-      console.error("Error guardando contador", e);
+      console.error("Error sumando descarga", e);
     }
   }
 
   cargarContador();
 </script>
+
 
 
 </body>
