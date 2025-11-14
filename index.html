@@ -54,6 +54,18 @@
       cursor: pointer;
     }
 
+.tv-image {
+  width: 150px;     /* tamaño moderado */
+  max-width: 150px; /* nunca crecerá más de 150px */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.tv-image:hover {
+  transform: scale(1.05);
+}
+
+
     /* 🔵 CONTADOR GLOBAL */
     .contador {
       position: fixed;
